@@ -1,5 +1,7 @@
 import socket
 
+messages = list()
+
 def server():
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -16,7 +18,9 @@ def server():
         data = client_socket.recv(1024).decode()
         print(f"Пользователь с адресом: {client_address} отправил сообщение: {data}")
 
-        client_socket.send(data.encode())
+        messages.append(data)
+        response = '\n'.join(messages)
+        client_socket.send(response.encode())
 
         client_socket.close()
 
